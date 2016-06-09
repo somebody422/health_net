@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section_title }}{% endblock %}
+
+{% block content %}
+    <div class="text-center" name="title">
+        <h1>Register with HealthNet</h1>
+    </div>
+    <div class="text-center" style="margin-top: 15px">
+        {% if register_error %}
+            <div class="alert alert-danger" role="alert">
+                <p>{{ register_error }}</p>
+            </div>
+        {% endif %}
+        <form class="form-horizontal" role="form" method="post" action="{% url 'register' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="insurance-company">
+                    Insurance Company *
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="insurance_company"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="insurance-id">
+                    Insurance ID *
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="insurance_id"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="email">
+                    Email *
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="email"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="password">
+                    Password *
+                </label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" name="password"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="first-name">
+                    First Name *
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="first_name"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="last-name">
+                    Last Name *
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="last_name"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="phone">
+                    Phone *
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="phone"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="pcp">
+                    Primary Care Physician
+                </label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="pcp">
+                        {% for doc in doctors %}
+                        <option value="{{ doc.parent.pk }}">Dr. {{ doc.parent.first_name }} {{ doc.parent.last_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="hospital">
+                    Preferred Hospital
+                </label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="hospital">
+                        {% for hptl in hospitals %}
+                        <option value="{{ hptl.pk }}">{{ hptl.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5">
+                    <input type="submit" name="register" value="Continue" class="btn btn-default form-control">
+                </div>
+                <div class="col-sm-5">
+                    <input type="submit" name="cancel" value="Cancel" class="btn btn-default form-control">
+                </div>
+            </div>
+
+            <div class="form-group" name="require_warning">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                    <p style="color:red; text-align: left">*: required</p>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section_title }}{% endblock %}
+
+{% block content %}
+
+<div class="text-center">
+    <h1>Registration complete!</h1>
+</div>
+
+<div>
+    <p>You are now registered with HealthNet, but your profile is not complete.
+        You can continue to fill out optional data, some of which is required
+        to use all the features of HealthNet, or continue to the website now.</p>
+</div>
+<form class="form-horizontal" role="form" method="post" action="{% url 'register_finish' %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <div class="col-sm-6">
+            <input type="submit" name="continue" value="Continue Registration" class="btn btn-default form-control">
+        </div>
+        <div class="col-sm-6">
+            <input type="submit" name="exit" value="Go to HealthNet" class="btn btn-danger form-control">
+        </div>
+
+    </div>
+</form>
+
+{% endblock %}}

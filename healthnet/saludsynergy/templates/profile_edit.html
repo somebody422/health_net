@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% block content %}
+<div id="ProfilePage">
+    <form action="{% url 'profile_edit' user.pk %}" method="post" role="form" class="form-horizontal">
+        {% csrf_token %}
+
+        {% if first_name_error %}
+        <div class="form-group">
+            <label class="control-label col-sm-2"></label>
+            <div class="alert alert-danger col-sm-10" role="alert">
+                <p>{{ first_name_error }}</p>
+            </div>
+        </div>
+        {% endif %}
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="first_name">First Name:</label>
+            <div class="col-sm-10">
+                <input type="text" name="first_name" value="{{ user.first_name }}" class="form-control" placeholder="First name">
+            </div>
+        </div>
+
+        {% if last_name_error %}
+            <label class="control-label col-sm-2"></label>
+            <div class="alert alert-danger col-sm-10" role="alert">
+                <p>{{ last_name_error }}</p>
+            </div>
+        {% endif %}
+        <div class="form-group">
+            <label class="control-label col-sm-2">Last Name:</label>
+            <div class="col-sm-10">
+                <input type="text" name="last_name" value="{{ user.last_name }}" class="form-control" placeholder="Surname">
+            </div>
+        </div>
+
+        {% if phone_error %}
+            <label class="control-label col-sm-2"></label>
+            <div class="alert alert-danger col-sm-10" role="alert">
+                <p>{{ phone_error }}</p>
+            </div>
+        {% endif %}
+        <div class="form-group">
+            <label class="control-label col-sm-2">Phone Number:</label>
+            <div class="col-sm-10">
+                <input type="text" name="phone" value="{{ user.patient.phone }}" class="form-control" placeholder="Phone number">
+            </div>
+        </div>
+
+        {% if COMPANY_error %}
+            <label class="control-label col-sm-2"></label>
+            <div class="alert alert-danger col-sm-10" role="alert">
+                <p>{{ COMPANY_error }}</p>
+            </div>
+        {% endif %}
+        <div class="form-group">
+            <label class="control-label col-sm-2">Insurance Company:</label>
+            <div class="col-sm-10">
+                <input type="text" name="insurance_company" value="{{ user.patient.insurance_company }}" class="form-control" placeholder="Insurance Company">
+            </div>
+        </div>
+
+        {% if ID_error %}
+            <label class="control-label col-sm-2"></label>
+            <div class="alert alert-danger col-sm-10" role="alert">
+                <p>{{ ID_error }}</p>
+            </div>
+        {% endif %}
+        <div class="form-group">
+            <label class="control-label col-sm-2">Insurance Number:</label>
+            <div class="col-sm-10">
+                <input type="text" name="insurance_id" value="{{ user.patient.insurance_id }}" class="form-control" placeholder="Insurance Number">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Hospital:</label>
+            <div class="col-sm-10">
+                <select class="form-control" name="hospital">
+                    {% for hospital in hospitals %}
+                    {% if hospital == user.patient.hospital %}
+                    <option value="{{hospital.pk}}" selected>{{hospital.name}}</option>
+                    {% else %}
+                    <option value="{{hospital.pk}}">{{hospital.name}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Primary Care Provider:</label>
+            <div class="col-sm-10">
+                <select class="form-control" name="doctor">
+                    {% for doc in doctors %}
+                    {% if doc == user.patient.pcp %}
+                    <option selected value="{{doc.pk}}">Dr. {{doc.parent.first_name}} {{doc.parent.last_name}}</option>
+                    {% else %}
+                    <option value="{{doc.pk}}">Dr. {{doc.parent.first_name}} {{doc.parent.last_name}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Gender:</label>
+            <div class="col-sm-10">
+                <select class="form-control" name="gender">
+                    <option value="1" {% if user.patient.gender == Patient.GENDER_MALE %} selected {% endif %}>Male</option>
+                    <option value="2" {% if user.patient.gender == Patient.GENDER_FEMALE %} selected {% endif %}>Female</option>
+                    <option value="3" {% if user.patient.gender == Patient.GENDER_OTHER %} selected {% endif %}>Other</option>
+                </select>
+            </div>
+        </div>
+
+        {% if height_error %}
+            <label class="control-label col-sm-2"></label>
+            <div class="alert alert-danger col-sm-10" role="alert">
+                <p>{{ height_error }}</p>
+            </div>
+        {% endif %}
+        <div class="form-group">
+            <label class="control-label col-sm-2">Height:</label>
+            <div class="col-sm-5">
+                <div class="input-group">
+                    <input type="number" class="form-control" name="height_feet" value="{{feet}}" placeholder="Feet">
+                    <span class="input-group-addon" style="font-family: monospace, sans-serif">ft.</span>
+                </div>
+            </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-5">
+                <div class="input-group">
+                    <input type="number" class="form-control" name="height_inch" value="{{inch}}" placeholder="Inches">
+                    <span class="input-group-addon" style="font-family: monospace, sans-serif">in.</span>
+                </div>
+            </div>
+        </div>
+
+        {% if weight_error %}
+            <label class="control-label col-sm-2"></label>
+            <div class="alert alert-danger col-sm-10" role="alert">
+                <p>{{ weight_error }}</p>
+            </div>
+        {% endif %}
+        <div class="form-group">
+            <label class="control-label col-sm-2">Weight:</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control col-sm-10" name="weight" value="{{user.patient.weight}}" placeholder="Weight">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Eye Color:</label>
+            <div class="col-sm-10">
+                <select class="form-control col-sm-10" name="eye_color">
+                    <option value="1" {% if user.patient.eye_color == 1 %} selected {% endif %}>Brown</option>
+                    <option value="2" {% if user.patient.eye_color == 2 %} selected {% endif %}>Blue</option>
+                    <option value="3" {% if user.patient.eye_color == 3 %} selected {% endif %}>Green</option>
+                    <option value="4" {% if user.patient.eye_color == 4 %} selected {% endif %}>Hazel</option>
+                    <option value="5" {% if user.patient.eye_color == 5 %} selected {% endif %}>Other</option>
+                </select>
+            </div>
+        </div>
+
+        {% if dob_error %}
+            <label class="control-label col-sm-2"></label>
+            <div class="alert alert-danger col-sm-10" role="alert">
+                <p>{{ dob_error }}</p>
+            </div>
+        {% endif %}
+        <div class="form-group">
+            <label class="control-label col-sm-2">Birth Date:</label>
+            <div class="col-sm-10">
+                <input type="date" name="birth_date" value="{{year}}-{{month}}-{{day}}" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-5">
+                <input type="submit" name="confirm" value="Confirm" class="btn btn-default form-control">
+            </div>
+            <div class="col-sm-5">
+                <input type="submit" name="cancel" value="Cancel" class="btn btn-default form-control">
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section_title }}{% endblock %}
+
+{% block content %}
+    <div class="text-center" name="title-1">
+        <h1>Register with HealthNet</h1>
+    </div>
+    <div class="text-center" name="title-2">
+         <h2>Step 2</h2>
+    </div>
+    <div class="text-center" style="margin-top: 15px">
+        {% if register_error %}
+            <div class="alert alert-danger" role="alert">
+                <p>{{ register_error }}</p>
+            </div>
+        {% endif %}
+        <form class="form-horizontal" role="form" method="post" action="{% url 'more_register' %}">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="hospital">
+                    Preferred Hospital:
+                </label>
+                <div class="col-sm-8">
+                    <select class="form-control" name="hospital">
+                        <option value="-1" selected>----------</option>
+                        {% for hptl in hospitals %}
+                        <option value="{{ hptl.pk }}">{{ hptl.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-4">
+                    <input type="submit" name="register" value="Continue" class="btn btn-default form-control">
+                </div>
+                <div class="col-sm-4">
+                    <input type="submit" name="cancel" value="Cancel" class="btn btn-danger form-control">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8">
+                    <p class="text-center">All information on this page is required.</p>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

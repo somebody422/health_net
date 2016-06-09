@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section_title }}{% endblock %}
+
+{% block content %}
+    <h2>Welcome to HealthNet, {{user.first_name}}!</h2>
+
+    <!-- Move this warning somewhere else -->
+    <strong style:color="red">{{user_type_error}}</strong>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h3 class="text-center">Schedule</h3>
+            {% if num_events > 0 %}
+                <h4>Up next</h4>
+                <p>{{next_event.name}}</p>
+                <p>{{next_event.location}}</p>
+                <p>{{next_event.start}} - {{next_event.end}}</p>
+                <p>{{next_event.description}}</p>
+            {% else %}
+                <h4>You have no upcoming appointments</h4>
+            {% endif %}
+        </div>
+        <div class="col-md-4">
+            <h3 class="text-center">Medical Records</h3>
+            {% if medrec_error %}
+                <h4>{{medrec_error}}</h4>
+            {% endif %}
+            {% for patient in my_patients %}
+                <p><a href="{% url 'view_medrec_by_id' id=patient.pk %}">{{patient.parent.first_name}} {{patient.parent.last_name}}</a></p>
+            {% endfor %}
+        </div>
+        <div class="col-md-4">
+            <h3 class="text-center">Admitted Patients</h3>
+            <p><b><a href="{% url 'create_admission' %}">Admit a patient</a></b></p>
+            {% if admission_error %}
+                <h4>{{admission_error}}</h4>
+
+            {% endif %}
+            
+            {% for admission in admissions %}
+                <p> {{admission.patient.parent.first_name}} {{admission.patient.parent.last_name}} : <b><a href="{% url 'delete_admission' id=admission.pk %}">Release</a></b>
+            {% endfor %}
+            
+        </div>
+    </div>
+
+{% endblock %}

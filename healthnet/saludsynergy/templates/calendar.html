@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section_title }}{% endblock %}
+
+{% block content %}
+    <div>
+        <a class="btn btn-default" role="button" href="{% url 'create_appt' %}">
+            Create Appointment
+        </a>
+    </div>
+    <br/>
+
+    <div id="calendar"></div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                defaultView: 'month',
+                events: function(start, end, timezone, callback) {
+                    $.ajax({
+                        url: '{% url 'calendar_feed' %}',
+                        dataType: 'json',
+                        data: {
+                            start: start.format(),
+                            end: end.format()
+                        },
+                        success: function(events) {
+                            console.log(events);
+                            callback(events['events']);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

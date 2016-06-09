@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section_title }}{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h1>Welcome to {{ site_title }}!</h1>
+        <img src="../static/doctors2.jpg" width="700" height="450"/>
+    </div>
+
+    <div class="text-center">
+        <h2>All-In-One Medical System</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="text-center">
+                <img src="../static/house.PNG" width="104" height="104"/>
+            </div>
+            <h3 class="text-center">Patient Portal</h3>
+            <h4 class="text-center">View your prescriptions, appointments, medical records, and more!</h4>
+        </div>
+
+        <div class="col-md-4">
+            <div class="text-center">
+                <img src="../static/heart.PNG" width="104" height="104"/>
+            </div>
+            <h3 class="text-center">Robust Functionality</h3>
+            <h4 class="text-center">The GOLD standard in efficient, reliable patient management.</h4>
+        </div>
+
+        <div class="col-md-4">
+            <div class="text-center">
+                <img src="../static/textbubble.PNG" width="104" height="104"/>
+            </div>
+            <h3 class="text-center">Convenient Communication</h3>
+            <h4 class="text-center">Contact your doctor through our convenient messaging system.</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="text-center">
+                        <p>Already have an account? Click this button to login, and access everything from your upcoming appointments to your personalized electronic medical record.</p>
+                        <a class="btn btn-default" role="button" href="{% url 'login' %}">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="text-center">
+                        <p>Don't have an account yet? Click this button, and after some simple questions you'll be all set up.</p>
+                        <a class="btn btn-default" role="button" href="{% url 'register_1' %}">Register</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

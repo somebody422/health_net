@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section_title }}{% endblock %}
+
+{% block content %}
+    <h2>Welcome to HealthNet, {{ user.first_name }}!</h2>
+
+    <!-- Move this warning somewhere else -->
+    <strong style:color="red">{{user_type_error}}</strong>
+
+    {% if user_type == 'patient' %}
+        <div class="row">
+            <div class="col-md-4">
+                <h3 class="text-center">Schedule</h3>
+                {% if num_events > 0 %}
+                    <h4>Up next</h4>
+                    <p>{{next_event.name}}</p>
+                    <p>{{next_event.location}}</p>
+                    <p>{{next_event.start}} - {{next_event.end}}</p>
+                    <p>{{next_event.description}}</p>
+                {% else %}
+                    <h4>You have no upcoming appointments</h4>
+                {% endif %}
+            </div>
+            <div class="col-md-4">
+                <h3 class="text-center">Prescriptions</h3>
+                {% if has_prescriptions %}
+                    <ul>
+                    {% for p in prescriptions %}
+                        <li>{{ p.drug }}: {{p.amount}}</li>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                    <h4 class="text-center">You don't have any current prescriptions</h4>
+                {% endif %}
+            </div>
+            <div class="col-md-4">
+                <h3 class="text-center">Profile</h3>
+                <p><b>Name: </b>{{user.first_name}} {{user.last_name}}</p>
+                <p><b>Email: </b>{{user.email}}</p>
+                {% if last_login %}
+                    <p><b>Last Login: </b>{{last_login}} UTC</p>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    {% if user_type == "admin" %}
+        <p><a href="{% url 'register_doctor' %}">Register doctor</a></p>
+        <p><a href="{% url 'register_nurse' %}">Register nurse</a></p>
+        <p><a href="{% url 'register_admin' %}">Register admin</a></p>
+        <p><a href="{% url 'make_hospital' %}">New hospital</a></p>
+        <p><a href="{% url 'register_medication' %}">New medication</a></p>
+    {% endif %}
+
+{% endblock %}

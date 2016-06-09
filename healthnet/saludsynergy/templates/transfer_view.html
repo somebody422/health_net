@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section_title }}{% endblock %}
+
+{% block content %}
+    <div class="col-md-4 col-md-offset-4">
+        <div class="text-center">
+	    <h2>Transferring to {{ hospital }}</h2>
+            <form method="post" style="display:inline" action="{% url 'transfer_view' trans_id %}">
+                {% csrf_token %}
+		<input name="action" type="hidden" value="confirm"/>
+		<button type="submit" class="btn btn-default">Confirm</button>
+	    </form>
+	    <form method="post" style="display:inline" action="{% url 'transfer_view' trans_id %}">
+                {% csrf_token %}
+		<input name="action" type="hidden" value="delete"/>
+		<button type="submit" class="btn btn-danger">Deny</button>
+	    </form>
+	</div>
+    </div>
+{% endblock %}
+		

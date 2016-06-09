@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section_title }}{% endblock %}
+
+{% block content %}
+    <div class="col-md-8 col-md-offset-2">
+        <a class="btn btn-default" role="button" href="{% url 'calendar' %}">
+            Back to Calendar
+        </a>
+
+        <form method="post" action="{% url 'delete_appt' appt_id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">
+                Cancel this Appointment
+            </button>
+        </form>
+
+        <h2>{{event.name}}</h2>
+
+        <h3>Where</h3>
+        <p>{{ event.location }}</p>
+
+        <h3>When</h3>
+        <p>{{event.start}}</p>
+        
+        <h3>Duration</h3>
+        <p>{{ duration }} Hours</p>
+
+        <h3>Reason</h3>
+        <p>{{ event.description }}</p>
+    </div>
+{% endblock %}

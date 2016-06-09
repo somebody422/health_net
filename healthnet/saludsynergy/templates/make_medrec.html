@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section_title }}{% endblock %}
+
+{% block content %}
+
+{% if form_error %}
+<div class="alert alert-danger" role="alert">
+    <p>{{ form_error }}</p>
+</div>
+{% endif %}
+
+<form method="post" action="{% url 'make_medrec' %}" class="form-horizontal">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="patient" class="control-label col-sm-2">Patient</label>
+        <div class="col-sm-8">
+            <select name="patient" class="form-control">
+                {% for pat in patients %}
+                <option value="{{ pat.pk }}">
+                    {{ pat.parent.first_name }}
+                    {{ pat.parent.last_name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="title" class="control-label col-sm-2">Title</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" name="title"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="body" class="control-label col-sm-2">Body</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" name="body"/>
+        </div>
+    </div>
+</form>
+{% endblock %}

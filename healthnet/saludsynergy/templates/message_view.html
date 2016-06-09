@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section_title }}{% endblock %}
+
+{% block content %}
+    <div class="col-md-8 col-md-offset-2">
+        <div class="text-center">
+            <h2>Message from {{ sender }}: {{ title }}</h2>
+
+            <pre class="row text-left" style="outline: 1px solid black">{{ body }}</pre>
+
+            <br>
+
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+                <p>{{ error }}</p>
+            </div>
+            {% endif %}
+
+            <form method="post" action="{% url 'message_view' id %}">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <textarea rows="6" class="form-control" name="body"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Reply</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+                

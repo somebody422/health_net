@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section_title }}{% endblock %}
+
+{% block content %}
+
+<h2 class="text-center">New Message</h2>
+
+{% if error %}
+<div class="alert alert-danger" role="alert">
+    <p>{{ error }}</p>
+</div>
+{% endif %}
+
+<form method="post" action="{% url 'message_send' %}" class="form-horizontal">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="dest" class="control-label col-sm-2">To</label>
+        <div class="col-sm-8">
+            <select name="dest" class="form-control">
+                {% for rcp in recipients %}
+                <option value="{{ rcp.pk }}">{{ rcp.email }} ({{ rcp.first_name }} {{ rcp.last_name }})</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="title" class="control-label col-sm-2">Title</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" name="title"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="body" class="col-sm-2 control-label">Body</label>
+        <div class="col-sm-8">
+            <textarea rows="6" class="form-control" name="body"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-4">
+            <button type="submit" class="btn btn-default form-control">Send</button>
+        </div>
+        <div class="col-sm-4">
+            <a href="{% url 'inbox' %}" role="button" class="btn btn-danger form-control">Cancel</a>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
+		

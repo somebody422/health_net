@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section_title }}{% endblock %}
+
+{% block content %}
+
+<h1 class="text-center">Register A New Doctor</h1>
+
+{% if register_error %}
+<div class="alert alert-danger" role="alert">
+    <p>{{ register_error }}</p>
+</div>
+{% endif %}
+
+<form method="post" action="{% url 'register_doctor' %}" class="form-horizontal">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="email" class="control-label col-sm-2">Email:</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" name="email" placeholder="Email"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="password" class="control-label col-sm-2">Password:</label>
+        <div class="col-sm-8">
+            <input type="password" class="form-control" name="password" placeholder="Password"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="first-name" class="control-label col-sm-2">First Name:</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" name="first_name" placeholder="First Name"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="last-name" class="control-label col-sm-2">Last Name:</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" name="last_name" placeholder="Last Name"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="hospital" class="control-label col-sm-2">Preferred Hospitals:</label>
+        <div class="col-sm-8">
+            <select multiple name="hospitals" class="form-control">
+                {% for hptl in hospitals %}
+                <option value="{{ hptl.pk }}">{{ hptl.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-4">
+            <button type="submit" class="btn btn-default form-control">Register</button>
+        </div>
+        <div class="col-sm-4">
+            <a href="{% url 'dashboard' %}" role="button" class="btn btn-danger form-control">Cancel</a>
+        </div>
+    </div>
+</form>
+<p class="text-center">All information on this page is required.</p>
+{% endblock %}

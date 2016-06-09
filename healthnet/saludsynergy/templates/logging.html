@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section_title }}{% endblock %}
+
+{% block content %}
+    <h1>Activity Log</h1>
+
+    <table class="table">
+        <tr>
+            <th>Time</th>
+            <th>User</th>
+            <th>Title</th>
+            <th>Description</th>
+        </tr>
+        {% for log in logs %}
+            <tr>
+                <td>{{log.time}}</td>
+                {%if log.user == None%}
+                    <td></td>
+                {%else%}
+                    <td>{{log.user.first_name}} {{log.user.last_name}}</td>
+                {%endif%}
+                <td>{{log.title}}</td>
+                <td>{{log.description}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

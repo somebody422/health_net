@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section_title }}{% endblock %}
+
+{% block content %}
+    <div class="text-center" name="title">
+        <h1>Register with HealthNet</h1>
+    </div>
+    <div class="text-center" name="title-2">
+        <h2>Optional Information</h2>
+    </div>
+    <div class="text-center" style="margin-top: 15px">
+        {% if register_error %}
+            <div class="alert alert-danger" role="alert">
+                <p>{{ register_error }}</p>
+            </div>
+        {% endif %}
+        <form class="form-horizontal" role="form" method="post" action="{% url 'register_finish' %}">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Date of Birth">
+                    Date of Birth:
+                </label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" name="birth_date" value="1990-01-01">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="phone">
+                    Phone:
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="phone" placeholder="Phone Number"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Gender">
+                    Gender:
+                </label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="gender">
+                        <option value="-1" selected>----------</option>
+                        <option value="1">Male</option>
+                        <option value="2">Female</option>
+                        <option value="3">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Height">
+                    Height:
+                </label>
+                <div class="col-sm-5">
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="height_feet" placeholder="Feet">
+                        <span class="input-group-addon" style="font-family: monospace, sans-serif">ft.</span>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="height_inch" placeholder="Inches">
+                        <span class="input-group-addon" style="font-family: monospace, sans-serif">in.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Weight">
+                    Weight:
+                </label>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <input type="number" class="form-control" name="weight" placeholder="Pounds">
+                        <span class="input-group-addon" style="font-family: monospace, sans-serif">lbs.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Eye Color">
+                    Eye Color:
+                </label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="eye_color">
+                        <option value="-1" selected>----------</option>
+                        <option value="1">Brown</option>
+                        <option value="2">Blue</option>
+                        <option value="3">Green</option>
+                        <option value="4">Hazel</option>
+                        <option value="5">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5">
+                    <input type="submit" name="register" value="Finish" class="btn btn-default form-control">
+                </div>
+                <div class="col-sm-5">
+                    <input type="submit" name="cancel" value="Cancel" class="btn btn-danger form-control">
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

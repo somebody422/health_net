@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section_title }}{% endblock %}
+
+{% block content %}
+
+<div class="text-center" name="title-1">
+        <h1>Register with HealthNet</h1>
+    </div>
+    <div class="text-center" name="title-2">
+        <h2>Step 3</h2>
+    </div>
+
+<form class="form-horizontal" role="form" method="post" action="{% url 'register_3' %}">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="pcp">
+            Primary Care Physician:
+        </label>
+        <div class="col-sm-8">
+            <select class="form-control" name="pcp">
+                <option value="-1" selected>----------</option>
+                {% for doc in doctors %}
+                <option value="{{ doc.parent.pk }}">Dr. {{ doc.parent.first_name }} {{ doc.parent.last_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-4">
+            <input type="submit" name="confirm" value="Confirm" class="btn btn-default form-control">
+        </div>
+        <div class="col-sm-4">
+            <input type="submit" name="cancel" value="Cancel" class="btn btn-danger form-control">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <p class="text-center">All information on this page is required.</p>
+        </div>
+    </div>
+</form>
+{% endblock %}}

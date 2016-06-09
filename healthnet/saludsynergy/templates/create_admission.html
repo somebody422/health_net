@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %} {{sectionTitle}} {% endblock %}
+
+{% block content %}
+
+{% if error %}
+<div>
+  <p>{{error}}</p>
+</div>
+{% endif %}
+
+<!-- <div>
+    <form action="{% url 'create_admission' %}" method="post">
+        {% csrf_token %}
+        <label for="patient">Select a patient:</label><br/>
+        <select name="patient">
+            {% for patient in patients %}
+            <option value="{{ patient.pk }}">{{ patient.parent.first_name }} {{ patient.parent.last_name }}</option>
+            {% endfor %}
+        </select>
+        <div class="form-group">
+            <label>Reason for Admission:</label>
+            <input type="text" class="form-control" name="reason"/>
+        </div>
+
+        <button type="submit" class="btn btn-default">Create Test</button>
+    </form>
+</div> -->
+
+
+<form class="form-horizontal" role="form" method="post" action="{% url 'create_admission' %}">
+    {% csrf_token %}
+    
+    <div class="form-group">
+    <label class="control-label col-sm-2" for="patient">
+        Patient:
+    </label>
+    <div class="col-sm-10">
+        <select class="form-control" name="patient">
+            {% for patient in patients %}
+            <option value="{{ patient.pk }}">{{ patient.parent.first_name }} {{ patient.parent.last_name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="insurance_company">
+            Reason for admission:
+        </label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="reason" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-5">
+            <input type="submit" name="register" value="Create" class="btn btn-default form-control">
+        </div>
+        <div class="col-sm-5">
+            <input type="submit" name="cancel" value="Cancel" class="btn btn-default form-control">
+        </div>
+    </div>
+    
+</form>
+
+{% endblock %}}

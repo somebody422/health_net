@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section_title }}{% endblock %}
+
+{% block content %}
+    {% if create_prescription_error %}
+        <div class="alert alert-danger" role="alert">
+            <p>{{ create_prescription_error }}</p>
+        </div>
+    {% endif %}
+    <div class="text-center">
+        <h1>Create Prescription:</h1>
+    </div>
+    <div class="form-group">
+        <form class="form-horizontal" action="{% url 'create_prescription' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="patient">Patient:</label>
+                <div class="col-sm-8">
+                    <select name="patient_id" class="form-control">
+                        {% for pat in patients %}
+                        <option value="{{ pat.pk }}"> {{ pat.parent.first_name }} {{ pat.parent.last_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="drug">Drug:</label>
+                <div class="col-sm-8">
+                    <select name="drug" class="form-control">
+                        {% for med in medications %}
+                        <option value="{{ med.pk }}"> {{ med.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="amount">Amount:</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="amount">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="start date">Start Date:</label>
+                <div class="col-sm-8">
+                    <input type="date" class="form-control" name="startdate"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="end date">End Date:</label>
+                <div class="col-sm-8">
+                    <input type="date" class="form-control" name="enddate"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2"></label>
+                <div class="col-sm-8">
+                    <p style="color:red">Please use the format: <i>YYYY-MM-DD</i> (ex. 2015-12-31)</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="additional notes">Additional Notes:</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="notes">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-4">
+                    <input type="submit" value="Submit" name="Submit" class="form-control btn btn-default">
+                </div>
+                <div class="col-sm-4">
+                    <input type="submit" value="Cancel" name="Cancel" class="form-control btn btn-danger">
+                </div>
+            </div>
+
+        </form>
+    </div>
+{% endblock %}

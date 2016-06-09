@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %} Tests for {{user.first_name}} {{user.last_name}} {% endblock %}
+
+
+{% block content %}
+
+<p>
+  <a href="{% url 'createTest' %}">Create new test</a>
+</p><br>
+
+
+  
+{% for test in tests %}
+
+  <div>
+    <table class="table table-striped">
+        <tr>
+            <th>Name:</th>
+            <td>{{ test.name }}</td>
+        </tr>
+        <tr>
+            <th>Results:</th>
+            <td>{{ test.results }}</td>
+        </tr>
+        <tr>
+            <th>Notes:</th>
+            <td>{{ test.notes }}</td>
+        </tr>
+        <tr>
+            <th>Doctor:</th>
+            <td>Dr. {{ test.doctor.parent.last_name }}</td>
+        </tr>
+        <tr>
+            <th>Patient:</th>
+            <td>{{ test.patient.parent.first_name }} {{ test.patient.parent.last_name }}</td>
+        </tr>
+        <tr>
+            <th>Released:</th>
+            <td>{{ test.released }}</td>
+        </tr>
+
+    </table>
+</div> <br>
+
+
+
+
+{% endfor %}
+
+
+{% endblock %}

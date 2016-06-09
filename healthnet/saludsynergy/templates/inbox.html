@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section_title }}{% endblock %}
+
+{% block content %}
+<h2 class="text-center">Inbox</h2>
+
+<form method="get" action="{% url 'message_send' %}" class="form-horizontal">
+	<div class="form-group">
+		<div class="col-sm-2"></div>
+		<div class="col-sm-8">
+			<a class="btn btn-primary form-control" role="button" href="{% url 'message_send' %}">Compose</a>
+		</div>
+	</div>
+</form>
+
+<div class="text-center">
+	{% if nmsgs > 0 %}
+	<table class="table table-striped">
+		<thead>
+		<tr>
+		    <th>Subject</th>
+		    <th>Time</th>
+		</tr>
+	    </thead>
+	    <tbody>
+		{% for m in msgs %}
+		<tr>
+		    <td><a href="{{ m.2 }}">{{ m.0 }}</a></td>
+		    <td>{{ m.1 }}</td>
+		</tr>
+		{% endfor %}
+	    </tbody>
+	</table>
+	{% else %}
+	<br><br><p>No messages!</p>
+	{% endif %}
+    </div>
+{% endblock %}
